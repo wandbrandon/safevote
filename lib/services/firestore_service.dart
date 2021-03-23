@@ -32,4 +32,15 @@ class FirestoreSerice {
 
     return null;
   }
+
+  Future<ElectionResults> getElectionResults(String eid) async {
+    try {
+      CollectionReference electionresults = db.collection('elecresults');
+      return ElectionResults.fromJson(
+          (await electionresults.doc(eid).get()).data());
+    } on Exception catch (e) {
+      print('There was an error: $e');
+    }
+    return null;
+  }
 }

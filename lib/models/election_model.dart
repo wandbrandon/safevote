@@ -19,3 +19,16 @@ class Election {
         'participants': participants ?? ''
       };
 }
+
+class ElectionResults {
+  final String eid;
+  final Map<String, String> results;
+
+  ElectionResults(this.eid, this.results);
+
+  ElectionResults.fromJson(Map<String, dynamic> data)
+      : eid = data['eid'],
+        results = data['results'];
+
+  Map<String, dynamic> toJson() => {'eid': eid ?? '', 'results': results ?? ''};
+}
