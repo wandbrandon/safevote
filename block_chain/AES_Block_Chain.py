@@ -40,7 +40,7 @@ class AES_Block_Chain:
         return self.chain[0].IV
 
     #Function that individually decodes each block in the block
-    #chain and sorts data into maps
+    #chain and sorts data into maps. NEEDS LIST OF CANDIDATES TO INITIALIZE VOTES MAP
     def Calculte_Votes(self, list_cand):
 
         for candidate in list_cand:

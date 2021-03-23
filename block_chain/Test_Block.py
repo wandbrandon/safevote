@@ -1,6 +1,3 @@
-
-from Block import Block
-from Blok_Chain import Block_Chain
 from AES_Block import AES_Block
 from AES_Block_Chain import AES_Block_Chain
 import hashlib
