@@ -18,7 +18,7 @@ class AES_Block:
 
         if previous_block: # Checks to ensure it isn't the first block
             self.previous_block = previous_block
-            self.data = (previous_block.block + "USER/VOTE," + user_id + "/" + vote)
+            self.data = (previous_block.block + "USER/VOTE," + user_id + "/" + vote) #Data of block chain is previous_block plus data of new block 
             
         else:
             self.data = ("USER/VOTE,"+ user_id + "/" + vote)
