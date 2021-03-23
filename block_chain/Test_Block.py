@@ -34,8 +34,9 @@ for i in range(10000):
 
 users, results = aes_block_chain.Calculte_Votes(["Kanye", "TRUMP", "Biden"])
 
-print (users)
-print (results)
+print ("USERS MAP: ", users)
+print ("RESULTS MAP: ", results)
+print ("Block Cipher Demo: ", "3rd Block in Chain: " , rah)
 
 
 
