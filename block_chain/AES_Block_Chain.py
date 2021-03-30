@@ -29,8 +29,10 @@ class AES_Block_Chain:
         self.vote_count += 1
         if self.Check_Block_Chain():
             self.chain.append(block)
+            return True
         else:
             assert ("BLOCK CHAIN TAMPERED WITH")
+            return False
 
     #gets the current block in the block chain
     def Get_Curr_Block (self):
