@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:safevoting/services/authentication_service.dart';
+import 'package:safevote/services/authentication_service.dart';
 
 class MainVotingPage extends StatefulWidget {
   @override

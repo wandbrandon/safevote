@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.safevoting">
+    package="com.example.safevote">
    <application
-        android:label="safevoting"
+        android:label="safevote"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

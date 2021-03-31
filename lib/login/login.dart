@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:safevoting/services/authentication_service.dart';
+import 'package:safevote/services/authentication_service.dart';
+
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -12,7 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String email = '';
   String psswrd = '';
-  String confirmPassword;
+  late String confirmPassword;
   bool createAccount = false;
 
   @override

@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:safevoting/login/login.dart';
-import 'package:safevoting/services/authentication_service.dart';
-import 'package:safevoting/voting/main_vote_page.dart';
+
 import 'package:firebase_core/firebase_core.dart';
+
+import 'login/login.dart';
+import 'services/authentication_service.dart';
+import 'voting/main_vote_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,14 +22,14 @@ class MyApp extends StatelessWidget {
         Provider<AuthenticationService>(
           create: (_) => AuthenticationService(FirebaseAuth.instance),
         ),
-        StreamProvider(
+        StreamProvider<User?>(
           initialData: null,
           create: (context) =>
               context.read<AuthenticationService>().authStateChanges,
         )
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'SafeVoting',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.orange,
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
 class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authUser = context.watch<User>();
+    final authUser = context.watch<User?>();
     if (authUser != null) {
       return MainVotingPage();
     }

@@ -13,10 +13,10 @@ class Election {
         participants = data['participants'];
 
   Map<String, dynamic> toJson() => {
-        'eid': eid ?? '',
-        'elecend': elecend ?? '',
-        'name': name ?? '',
-        'participants': participants ?? ''
+        'eid': eid,
+        'elecend': elecend,
+        'name': name,
+        'participants': participants
       };
 }
 
@@ -30,5 +30,5 @@ class ElectionResults {
       : eid = data['eid'],
         results = data['results'];
 
-  Map<String, dynamic> toJson() => {'eid': eid ?? '', 'results': results ?? ''};
+  Map<String, dynamic> toJson() => {'eid': eid, 'results': results};
 }

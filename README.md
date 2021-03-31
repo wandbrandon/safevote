@@ -1,4 +1,4 @@
-# safevoting
+# safevote
 
 A new Flutter project.
 

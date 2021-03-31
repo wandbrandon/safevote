@@ -1,4 +1,4 @@
-package com.example.safevoting
+package com.example.safevote
 
 import io.flutter.embedding.android.FlutterActivity
 
