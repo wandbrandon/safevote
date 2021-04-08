@@ -24,9 +24,9 @@ class _MainVotingPageState extends State<MainVotingPage> {
         ),
         body: ListView.builder(itemBuilder: (context, index) {
           return ListTile(
-            title: Text('Election ' + index.toString()),
+            title: Text('Election ${index + 1}'),
             onTap: () {},
-            leading: Icon(Icons.account_balance_outlined),
+            leading: Icon(Icons.where_to_vote_outlined),
             hoverColor: Colors.orange[100],
           );
         }));

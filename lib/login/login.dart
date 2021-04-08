@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safevote/services/authentication_service.dart';
-
+import 'package:flutter/animation.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 400,
                   child: Form(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    key: ValueKey('form1'),
+                    key: ValueKey('form2'),
                     child: Column(
                       children: [
                         TextFormField(
@@ -115,9 +115,13 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         OutlinedButton(
                             onPressed: () async {
+                              await context.read<AuthenticationService>().signUp(
+                                  email: email,
+                                  password:
+                                      psswrd); //Fixed Auto Sign-In from Registration Page.
                               await context
                                   .read<AuthenticationService>()
-                                  .signUp(email: email, password: psswrd);
+                                  .signOut();
                             },
                             child: Text('Register')),
                         OutlinedButton(
