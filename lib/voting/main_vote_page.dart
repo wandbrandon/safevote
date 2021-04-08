@@ -25,7 +25,14 @@ class _MainVotingPageState extends State<MainVotingPage> {
         body: ListView.builder(itemBuilder: (context, index) {
           return ListTile(
             title: Text('Election ${index + 1}'),
-            onTap: () {},
+            // VotePage() or a drop down with Candidates and Title?
+            onTap: () {
+              Row(children: <Widget>[
+                Expanded(
+                  child: Text("Election Title: "),
+                ),
+              ]);
+            },
             leading: Icon(Icons.where_to_vote_outlined),
             hoverColor: Colors.orange[100],
           );
