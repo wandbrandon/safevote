@@ -115,13 +115,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         OutlinedButton(
                             onPressed: () async {
-                              AnimatedContainer(
-                                duration: Duration(seconds: 3),
-                                color: Colors.blue,
-                                width: 500,
-                                height: 500,
-                              );
-
                               await context.read<AuthenticationService>().signUp(
                                   email: email,
                                   password:
