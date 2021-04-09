@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth;
