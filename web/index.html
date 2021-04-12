@@ -40,6 +40,31 @@
       });
     }
   </script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyB7SPtSq_LLoubf5j4qO3njKipER3DYRJk",
+    authDomain: "safevote-ee733.firebaseapp.com",
+    projectId: "safevote-ee733",
+    storageBucket: "safevote-ee733.appspot.com",
+    messagingSenderId: "398512451010",
+    appId: "1:398512451010:web:c7160b990506374a2b7a5b",
+    measurementId: "G-C9LLCQ11HQ"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+<script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>
