@@ -4,7 +4,11 @@ class Election {
   final String name;
   final List<String> participants;
 
-  Election(this.eid, this.elecend, this.name, this.participants);
+  Election(
+      {required this.eid,
+      required this.elecend,
+      required this.name,
+      required this.participants});
 
   Election.fromJson(Map<String, dynamic> data)
       : eid = data['eid'],

@@ -6,7 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'login/login.dart';
 import 'services/authentication_service.dart';
-import 'voting/main_vote_page.dart';
+import 'voting/election_list.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
         ),
         home: AuthenticationWrapper(),
         routes: {
-          '/main_vote': (context) => MainVotingPage(),
+          '/main_vote': (context) => ElectionList(),
         },
       ),
     );
@@ -48,7 +48,7 @@ class AuthenticationWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final authUser = context.watch<User?>();
     if (authUser != null) {
-      return MainVotingPage();
+      return ElectionList();
     }
     return LoginPage();
   }

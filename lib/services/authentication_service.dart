@@ -45,7 +45,9 @@ class AuthenticationService {
       {required String email, required String password}) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: password);
+        email: email,
+        password: password,
+      );
       debugPrint("successfully signed up user: $email, password: $password");
       return "Signed up";
     } on FirebaseAuthException catch (e) {
