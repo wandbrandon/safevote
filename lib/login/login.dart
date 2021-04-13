@@ -15,6 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   String psswrd = '';
   late String confirmPassword;
   bool createAccount = false;
+  bool forgotPass = false;
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +64,25 @@ class _LoginPageState extends State<LoginPage> {
                                   .signIn(email: email, password: psswrd);
                             },
                             child: Text('Sign In')),
-                        OutlinedButton(
-                            onPressed: () async {
-                              setState(() {
-                                createAccount = !createAccount;
-                              });
-                            },
-                            child: Text('Create Account'))
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              OutlinedButton(
+                                  onPressed: () async {
+                                    setState(() {
+                                      createAccount = !createAccount;
+                                    });
+                                  },
+                                  child: Text('Create Account')),
+                              OutlinedButton(
+                                onPressed: () async {
+                                  setState(() {
+                                    forgotPass = !forgotPass;
+                                  });
+                                },
+                                child: Text('Forgot Password?'),
+                              )
+                            ]),
                       ],
                     ),
                   ),
@@ -115,10 +128,10 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         OutlinedButton(
                             onPressed: () async {
-                              await context.read<AuthenticationService>().signUp(
-                                  email: email,
-                                  password:
-                                      psswrd); //Fixed Auto Sign-In from Registration Page.
+                              await context
+                                  .read<AuthenticationService>()
+                                  .signUp(email: email, password: psswrd);
+                              //Fixed Auto Sign-In from Registration Page.
                               await context
                                   .read<AuthenticationService>()
                                   .signOut();
