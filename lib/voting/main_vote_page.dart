@@ -13,13 +13,13 @@ class _MainVotingPageState extends State<MainVotingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          actions: [
-            IconButton(
-                icon: Icon(Icons.person_remove),
-                onPressed: () async {
-                  await context.read<AuthenticationService>().signOut();
-                })
-          ],
+          // actions: [
+          //   IconButton(
+          //       icon: Icon(Icons.person_remove),
+          //       onPressed: () async {
+          //         await context.read<AuthenticationService>().signOut();
+          //       })
+          // ],
           title: Text('Elections'),
         ),
         body: ListView.builder(itemBuilder: (context, index) {

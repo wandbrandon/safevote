@@ -19,11 +19,15 @@ class _VotingPageState extends State<VotingPage> {
           title: Text(widget.election.name),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            PageView.builder(
-              itemBuilder: (context, index) =>
-                  VoteCard(name: widget.election.participants[index]),
-            )
+            Expanded(
+              child: PageView.builder(
+                itemBuilder: (context, index) =>
+                    VoteCard(name: widget.election.participants[index]),
+              ),
+            ),
+            Text(widget.election.elecend.toString())
           ],
         ));
   }
@@ -43,6 +47,7 @@ class VoteCard extends StatelessWidget {
               : Alignment.center;
           return AnimatedContainer(
             height: 200,
+            width: 150,
             transformAlignment: Alignment.center,
             transform: Matrix4.rotationX(-cursorAlignment.y * 0.2)
               ..rotateY(cursorAlignment.x * 0.2)
