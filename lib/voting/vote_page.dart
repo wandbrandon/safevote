@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/index.dart';
 import 'package:safevote/models/election_model.dart';
 import 'package:tap_builder/tap_builder.dart';
 
@@ -18,24 +19,42 @@ class _VotingPageState extends State<VotingPage> {
         appBar: AppBar(
           title: Text(widget.election.name),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: PageView.builder(
-                itemBuilder: (context, index) =>
-                    VoteCard(name: widget.election.participants[index]),
+        body: Padding(
+          padding: const EdgeInsets.only(bottom: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: GridView.builder(
+                  itemCount: widget.election.participants.length,
+                  padding: EdgeInsets.all(32),
+                  itemBuilder: (context, index) => VoteCard(
+                      image: index == 0 ? 'images/DT.png' : 'images/HC.png',
+                      name: widget.election.participants[index],
+                      color: index == 0 ? Colors.red : Colors.blue),
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      crossAxisSpacing: 32,
+                      mainAxisSpacing: 32,
+                      maxCrossAxisExtent: 1000),
+                ),
               ),
-            ),
-            Text(widget.election.elecend.toString())
-          ],
+              Text('This election will end in '),
+              CountdownTimer(
+                endTime: widget.election.elecend.millisecondsSinceEpoch,
+              ),
+            ],
+          ),
         ));
   }
 }
 
 class VoteCard extends StatelessWidget {
   final String name;
-  const VoteCard({Key? key, required this.name}) : super(key: key);
+  final String image;
+  final Color color;
+  const VoteCard(
+      {Key? key, required this.name, required this.color, required this.image})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,39 +66,40 @@ class VoteCard extends StatelessWidget {
               : Alignment.center;
           return AnimatedContainer(
             height: 200,
-            width: 150,
             transformAlignment: Alignment.center,
-            transform: Matrix4.rotationX(-cursorAlignment.y * 0.2)
-              ..rotateY(cursorAlignment.x * 0.2)
+            transform: Matrix4.rotationX(-cursorAlignment.y * 0.15)
+              ..rotateY(cursorAlignment.x * 0.15)
               ..scale(
-                state == TapState.hover ? 0.94 : 1.0,
+                state == TapState.hover ? 1 : .95,
               ),
             duration: const Duration(milliseconds: 200),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: Colors.black,
+              color: color,
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(5),
               child: Stack(
-                fit: StackFit.passthrough,
+                fit: StackFit.expand,
                 children: [
                   AnimatedOpacity(
                       duration: const Duration(milliseconds: 200),
                       opacity: state == TapState.pressed ? 0.6 : 0.8,
-                      child: Icon(
-                        Icons.person,
+                      child: Image.asset(
+                        '$image',
+                        fit: BoxFit.cover,
                       )),
-                  AnimatedContainer(
-                    height: 200,
-                    transformAlignment: Alignment.center,
-                    transform: Matrix4.translationValues(
-                      cursorAlignment.x * 3,
-                      cursorAlignment.y * 3,
-                      0,
-                    ),
-                    duration: const Duration(milliseconds: 200),
-                    child: Center(
+                  Positioned(
+                    top: 30,
+                    left: 30,
+                    child: AnimatedContainer(
+                      transformAlignment: Alignment.center,
+                      transform: Matrix4.translationValues(
+                        cursorAlignment.x * 3,
+                        cursorAlignment.y * 3,
+                        0,
+                      ),
+                      duration: const Duration(milliseconds: 200),
                       child: Text(
                         name,
                         style: TextStyle(
