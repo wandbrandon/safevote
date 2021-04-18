@@ -13,9 +13,20 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   String email = '';
   String psswrd = '';
-  late String confirmPassword;
+  String confirmPassword = '';
   bool createAccount = false;
   bool forgotPass = false;
+  bool nonMatchingPasswords = false;
+  var nMP = TextEditingController();
+  String badPasswords = '';
+
+  bool doPasswordsMatch(String a, String b) {
+    bool doTheyMatch = true;
+    if (a != b) {
+      doTheyMatch = false;
+    }
+    return doTheyMatch;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                     key: ValueKey('form2'),
                     child: Column(
                       children: [
+                        Text(
+                          badPasswords,
+                        ),
                         TextFormField(
                           onChanged: (text) {
                             email = text;
@@ -120,21 +134,29 @@ class _LoginPageState extends State<LoginPage> {
                             confirmPassword = text;
                           },
                           obscureText: true,
-                          decoration:
-                              InputDecoration(labelText: 'Confirm Password'),
+                          decoration: InputDecoration(
+                              labelText: 'Confirm Password',
+                              errorText:
+                                  (doPasswordsMatch(psswrd, confirmPassword))
+                                      ? null
+                                      : 'Passwords dont match'),
                         ),
                         SizedBox(
                           height: 30,
                         ),
                         OutlinedButton(
                             onPressed: () async {
-                              await context
-                                  .read<AuthenticationService>()
-                                  .signUp(email: email, password: psswrd);
-                              //Fixed Auto Sign-In from Registration Page.
-                              await context
-                                  .read<AuthenticationService>()
-                                  .signOut();
+                              if (confirmPassword == psswrd) {
+                                await context
+                                    .read<AuthenticationService>()
+                                    .signUp(email: email, password: psswrd);
+                                //Fixed Auto Sign-In from Registration Page.
+                                await context
+                                    .read<AuthenticationService>()
+                                    .signOut();
+                              } else {
+                                debugPrint("passwords dont match");
+                              }
                             },
                             child: Text('Register')),
                         OutlinedButton(
