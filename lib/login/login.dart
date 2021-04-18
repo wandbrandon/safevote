@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:safevote/services/authentication_service.dart';
 import 'package:flutter/animation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:safevote/login/forgot_password.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -19,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   bool nonMatchingPasswords = false;
   var nMP = TextEditingController();
   String badPasswords = '';
+  final auth = FirebaseAuth.instance;
 
   bool doPasswordsMatch(String a, String b) {
     bool doTheyMatch = true;
@@ -26,6 +29,70 @@ class _LoginPageState extends State<LoginPage> {
       doTheyMatch = false;
     }
     return doTheyMatch;
+  }
+
+  alertOne(BuildContext context) {
+    var button = new TextButton(
+      onPressed: () async {
+        Navigator.pop(context);
+      },
+      child: Text("Okay"),
+    );
+    AlertDialog alert = new AlertDialog(
+      title: Text("Invalid Email", style: TextStyle(color: Colors.red[400])),
+      content: Text("Enter a valid UFL email to sign in."),
+      actions: [
+        button,
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        });
+  }
+
+  alertTwo(BuildContext context) {
+    var button = new TextButton(
+      onPressed: () async {
+        Navigator.pop(context);
+      },
+      child: Text("Okay"),
+    );
+    AlertDialog alert = new AlertDialog(
+      title: Text("Invalid Login", style: TextStyle(color: Colors.red[400])),
+      content: Text("Invalid Email or Password."),
+      actions: [
+        button,
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        });
+  }
+
+  alertThree(BuildContext context) {
+    var button = new TextButton(
+      onPressed: () async {
+        Navigator.pop(context);
+      },
+      child: Text("Okay"),
+    );
+    AlertDialog alert = new AlertDialog(
+      title: Text("Password Error", style: TextStyle(color: Colors.red[400])),
+      content: Text(
+          "Please make sure both passwords match exactly and a UFL email address is provided."),
+      actions: [
+        button,
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        });
   }
 
   @override
@@ -70,9 +137,16 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         OutlinedButton(
                             onPressed: () async {
-                              await context
-                                  .read<AuthenticationService>()
-                                  .signIn(email: email, password: psswrd);
+                              if (email.contains('@ufl.edu')) {
+                                await context
+                                    .read<AuthenticationService>()
+                                    .signIn(email: email, password: psswrd);
+                              } else if (!email.contains('@ufl.edu')) {
+                                alertOne(context);
+                              }
+                              if (auth.currentUser == null) {
+                                alertTwo(context);
+                              }
                             },
                             child: Text('Sign In')),
                         Row(
@@ -89,6 +163,11 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () async {
                                   setState(() {
                                     forgotPass = !forgotPass;
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ForgotPassword()));
                                   });
                                 },
                                 child: Text('Forgot Password?'),
@@ -133,20 +212,14 @@ class _LoginPageState extends State<LoginPage> {
                           onChanged: (text) {
                             confirmPassword = text;
                           },
-                          obscureText: true,
-                          decoration: InputDecoration(
-                              labelText: 'Confirm Password',
-                              errorText:
-                                  (doPasswordsMatch(psswrd, confirmPassword))
-                                      ? null
-                                      : 'Passwords dont match'),
                         ),
                         SizedBox(
                           height: 30,
                         ),
                         OutlinedButton(
                             onPressed: () async {
-                              if (confirmPassword == psswrd) {
+                              if (confirmPassword == psswrd &&
+                                  email.contains('@ufl.edu')) {
                                 await context
                                     .read<AuthenticationService>()
                                     .signUp(email: email, password: psswrd);
@@ -155,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
                                     .read<AuthenticationService>()
                                     .signOut();
                               } else {
-                                debugPrint("passwords dont match");
+                                alertThree(context);
                               }
                             },
                             child: Text('Register')),
