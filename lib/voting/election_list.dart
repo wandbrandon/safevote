@@ -25,7 +25,7 @@ class _ElectionListState extends State<ElectionList> {
       eid: 'sfwef829184023',
       name: 'Presidential Election 2012',
       elecend: DateTime(2021, 7, 1, 17, 30),
-      participants: ['Barack Obama', 'Hillary Clinton'],
+      participants: ['Barack Obama', 'Mitt Romney'],
     )
   ];
   @override

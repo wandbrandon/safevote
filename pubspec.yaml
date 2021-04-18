@@ -29,6 +29,7 @@ dependencies:
   cloud_firestore: ^1.0.0
   firebase_core: ^1.0.0
   tap_builder: ^0.2.0
+  flutter_countdown_timer: ^4.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -50,9 +51,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/Yeet.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - images/HC.png
+    - images/DT.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
