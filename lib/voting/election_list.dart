@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_countdown_timer/index.dart';
 import 'package:provider/provider.dart';
 import 'package:safevote/models/election_model.dart';
 import 'package:safevote/services/authentication_service.dart';
+import 'package:safevote/services/firestore_service.dart';
 import 'package:safevote/voting/vote_page.dart';
 
 class ElectionList extends StatefulWidget {
@@ -11,42 +14,35 @@ class ElectionList extends StatefulWidget {
 }
 
 class _ElectionListState extends State<ElectionList> {
-  List<Election> elections = [
-    Election(
-      eid: '910829184023',
-      name: 'Presidential Election 2020',
-      elecend: DateTime(2021, 5, 1, 17, 30),
-      participants: ['Donald Trump', 'Hillary Clinton'],
-    ),
-    Election(
-      eid: 'sfwef829184023',
-      name: 'Presidential Election 2012',
-      elecend: DateTime(2021, 7, 1, 17, 30),
-      participants: ['Barack Obama', 'Mitt Romney'],
-    )
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Elections'),
-        ),
-        body: ListView.builder(
-            itemCount: elections.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(elections[index].name),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              VotingPage(election: elections[index])));
-                },
-                leading: Icon(Icons.account_balance_outlined),
-                hoverColor: Colors.orange[100],
-              );
-            }));
+    final elections = context.watch<List<Election>>();
+
+    return elections.isNotEmpty
+        ? Scaffold(
+            appBar: AppBar(
+              title: Text('Elections'),
+            ),
+            body: ListView.builder(
+                itemCount: elections.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(elections[index].name),
+                    onTap: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  VotingPage(election: elections[index])));
+                    },
+                    leading: Icon(Icons.account_balance_outlined),
+                    trailing: CountdownTimer(
+                      endTime: elections[index].elecend.millisecondsSinceEpoch,
+                      endWidget: Text('Election is complete'),
+                    ),
+                    hoverColor: Colors.orange[100],
+                  );
+                }))
+        : SizedBox(height: 30, width: 30, child: CircularProgressIndicator());
   }
 }

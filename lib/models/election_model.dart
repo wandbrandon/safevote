@@ -2,33 +2,29 @@ class Election {
   final String eid;
   final DateTime elecend;
   final String name;
-  final List<String> participants;
+  final List<dynamic> candidates;
 
   Election(
       {required this.eid,
       required this.elecend,
       required this.name,
-      required this.participants});
+      required this.candidates});
 
   Election.fromJson(Map<String, dynamic> data)
       : eid = data['eid'],
-        elecend = data['name'],
+        elecend = DateTime.parse(data['elecend'].toDate().toString()),
         name = data['name'],
-        participants = data['participants'];
+        candidates = data['candidates'];
 
-  Map<String, dynamic> toJson() => {
-        'eid': eid,
-        'elecend': elecend,
-        'name': name,
-        'participants': participants
-      };
+  Map<String, dynamic> toJson() =>
+      {'eid': eid, 'elecend': elecend, 'name': name, 'candidates': candidates};
 }
 
 class ElectionResults {
   final String eid;
-  final Map<String, String> results;
+  final Map<String, dynamic> results;
 
-  ElectionResults(this.eid, this.results);
+  ElectionResults({required this.eid, required this.results});
 
   ElectionResults.fromJson(Map<String, dynamic> data)
       : eid = data['eid'],
