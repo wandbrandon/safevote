@@ -17,11 +17,20 @@ class _ElectionListState extends State<ElectionList> {
   @override
   Widget build(BuildContext context) {
     final elections = context.watch<List<Election>>();
-
     return elections.isNotEmpty
         ? Scaffold(
             appBar: AppBar(
               title: Text('Elections'),
+              actions: [
+                Tooltip(
+                  message: 'Sign Out',
+                  child: IconButton(
+                      icon: Icon(Icons.person_remove),
+                      onPressed: () async {
+                        await context.read<AuthenticationService>().signOut();
+                      }),
+                ),
+              ],
             ),
             body: ListView.builder(
                 itemCount: elections.length,
@@ -43,6 +52,8 @@ class _ElectionListState extends State<ElectionList> {
                     hoverColor: Colors.orange[100],
                   );
                 }))
-        : SizedBox(height: 30, width: 30, child: CircularProgressIndicator());
+        : Center(
+            child: SizedBox(
+                height: 30, width: 30, child: CircularProgressIndicator()));
   }
 }
